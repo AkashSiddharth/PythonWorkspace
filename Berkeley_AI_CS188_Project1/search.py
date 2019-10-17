@@ -88,17 +88,16 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
     ### COMMENT ALL THE PRINT MESSAGES TO IMPROVE RUNTIME
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-
     """ Initialize """
     starting_point = problem.getStartState()
+    # print "Start:", problem.getStartState()
+    # print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+    # print "Start's successors:", problem.getSuccessors(problem.getStartState())
+
     """ DepthFirstSearch : Implementation requires a stack """
     fringe = util.Stack()
     visited = []
 
-    print "Start:", starting_point
     """ Fringe will contain all the possible options to visit """
     fringe.push([(starting_point, 'STOP', 0)])
 
@@ -109,57 +108,72 @@ def depthFirstSearch(problem):
         """ Get the top of the stack """
         current_path = fringe.pop()
         # print "Current Path: ", current_path
-        current_state = current_path[len(current_path)-1]
-        # print "Current State: ", current_state
-        if not current_state[0] in visited:
-            visited.append(current_state[0])
+
+        """ Get the current state """
+        current_coordinates, _direction, _cost = current_path[len(current_path)-1]
+        # print "Current Coordinates: ", current_coordinates
+
+        """ Expand current_coordinates only if not in visited """
+        if not current_coordinates in visited:
+            visited.append(current_coordinates)
             # print "Visited updated to: ", visited
 
-            if problem.isGoalState(current_state[0]):
-                return map(lambda state: state[1], current_path[1:])
+            """ If the current_coordinates matches the goal state, then return directions """
+            if problem.isGoalState(current_coordinates):
+                # print "Path coordinates followed: ", visited
+                return map(lambda directions: directions[1], current_path[1:])
 
-            non_visited_nodes = filter(lambda next_successor: not next_successor[0] in visited , problem.getSuccessors(current_state[0]))
+            non_visited_nodes = filter(lambda successors: not successors[0] in visited , problem.getSuccessors(current_coordinates))
             # print "Non Visited nodes: ", non_visited_nodes
-            
+           
+            """ Create path """
             for successor in non_visited_nodes:
                 next_node = list(current_path)
                 next_node.append(successor)
                 fringe.push(next_node)
-    print "Path Followed/Discovered: ", current_path
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     ### COMMENT ALL THE PRINT MESSAGES TO IMPROVE RUNTIME
-    # Initialize
+    """ Initialize """
     starting_point = problem.getStartState()
-    # BreadthFirstSearch : Implementation requires a queue
+    # print "Start:", problem.getStartState()
+    # print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+
+    """ BreadthFirstSearch : Implementation requires a queue """
     fringe = util.Queue()
     visited = []
 
-    print "Start:", problem.getStartState()
-    # Fringe will contain all the possible options to visit
+    """ Fringe will contain all the possible options to visit """
     fringe.push([(starting_point, 'STOP', 0)])
 
-    # Loop condition fulfillment condition :
-    #   1. Either the fringe is empty
-    #   2. We encounter the goal condition
+    """ Loop condition fulfillment condition :
+       1. Either the fringe is empty
+       2. We encounter the goal condition """
     while not fringe.isEmpty():
+        """ Get the head of the queue """
         current_path = fringe.pop()
-        print "Current Path: ", current_path
-        current_state = current_path[len(current_path)-1]
-        print "Current State: ", current_state
+        # print "Current Path: ", current_path
 
-        if not current_state[0] in visited:
-            visited.append(current_state[0])
-            print "Visited updated to: ", visited
+        """ Get the current state """
+        current_coordinates, _direction, _cost = current_path[len(current_path)-1]
+        # print "Current Coordinates: ", current_coordinates
 
-            if problem.isGoalState(current_state[0]):
-                return map(lambda state: state[1], current_path[1:])
+        """ Expand current_state only if not in visited """
+        if not current_coordinates in visited:
+            visited.append(current_coordinates)
+            # print "Visited updated to: ", visited
 
-            non_visited_nodes = filter(lambda next_successor: not next_successor[0] in visited, problem.getSuccessors(current_state[0]))
-            print "Non Visited nodes: ", non_visited_nodes
+            """ If the current state matches the goal state, then return state """
+            if problem.isGoalState(current_coordinates):
+                # print "Path coordinates followed: ", visited
+                return map(lambda directions: directions[1], current_path[1:])
 
+            non_visited_nodes = filter(lambda successors: not successors[0] in visited, problem.getSuccessors(current_coordinates))
+            # print "Non Visited nodes: ", non_visited_nodes
+
+            """ Create Path """
             for successor in non_visited_nodes:
                 next_node = list(current_path)
                 next_node.append(successor)
@@ -168,37 +182,46 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     ### COMMENT ALL THE PRINT MESSAGES TO IMPROVE RUNTIME
-    # Initialize
+    """ Initialize """
     starting_point = problem.getStartState()
-    # UniformCostSearch require a Priority Queue
+    # print "Start:", problem.getStartState()
+    # print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+
+    """ UniformCostSearch : Implementation requires a Priority Queue """
     fringe = util.PriorityQueue()
     visited = []
 
+    """ Fringe will contain all the possible options to visit """
     start_state = ([(starting_point, 'STOP', 0)], 0)
-    print "Starting Point", start_state
     fringe.push(start_state, 0)
 
-    # Loop condition fulfillment condition :
-    #   1. Either the fringe is empty
-    #   2. We encounter the goal condition
+    """ Loop condition fulfillment condition :
+            1. Either the fringe is empty
+            2. We encounter the goal condition """
     while not fringe.isEmpty():
+        """ Get the head of the queue """
         current_path = fringe.pop()
-        print "Current Path: ", current_path
-        current_state = current_path[0][len(current_path[0]) - 1]
-        print "Current State: ", current_state
+        # print "Current Path: ", current_path
+    
+        """ Get the current coordinates """
+        current_coordinates, _direction, _cost = current_path[0][len(current_path[0]) - 1]
+        # print "Current Coordinates: ", current_coordinates
 
-        if not current_state[0] in visited:
-            visited.append(current_state[0])
-            print "Visited updated to: ", visited
+        """ Expand current_coordinates only if not in visited """
+        if not current_coordinates in visited:
+            visited.append(current_coordinates)
+            # print "Visited updated to: ", visited
 
-            if problem.isGoalState(current_state[0]):
-                return map(lambda state: state[1], current_path[0][1:])
+            """ If the current_coordinates matches the goal state, then return directions """
+            if problem.isGoalState(current_coordinates):
+                # print "Path coordinates followed: ", visited
+                return map(lambda directions: directions[1], current_path[0][1:])
 
-            non_visited_nodes = filter(lambda next_successor: not next_successor[0] in visited, problem.getSuccessors(current_state[0]))
-            print "Non Visited nodes: ", non_visited_nodes
-
+            non_visited_nodes = filter(lambda successors: not successors[0] in visited, problem.getSuccessors(current_coordinates))
+            # print "Non Visited nodes: ", non_visited_nodes
 
             for successor in non_visited_nodes:
+                """ Calculate cost """
                 cost = current_path[1] + successor[2]
                 next_node = (list(current_path[0]), cost)
                 next_node[0].append(successor)
@@ -215,34 +238,47 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
     """Search the node that has the lowest combined cost and heuristic first."""
-    # Initialize
+    ### COMMENT ALL THE PRINT MESSAGES TO IMPROVE RUNTIME
+    """ Initialize """
+    starting_point = problem.getStartState()
+    # print "Start:", problem.getStartState()
+    # print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+
+    """ A-star Search : Implementation requires a Prioirity Queue """
+    fringe = util.PriorityQueue()
     visited = []
 
-    # A* Search require a Priority Queue
-    fringe = util.PriorityQueue()
-
-    start_state = ([(problem.getStartState(), 'STOP', 0)], 0)
-    print "Starting Point", start_state
+    """ Fringe will contain all the possible options to visit """
+    start_state = ([(starting_point, 'STOP', 0)], 0)
     fringe.push(start_state, 0)
 
+    """ Loop condition fulfillment condition :
+            1. Either the fringe is empty
+            2. We encounter the goal condition """
     while not fringe.isEmpty():
+        """ Get the head of the queue """
         current_path = fringe.pop()
-        print "Current Path: ", current_path
-        current_state = current_path[0][len(current_path[0]) - 1]
-        print "Current State: ", current_state
+        # print "Current Path: ", current_path
 
-        if not current_state[0] in visited:
-            visited.append(current_state[0])
-            print "Visited updated to: ", visited
+        """ Get the current state """
+        current_coordinates, _direction, _cost  = current_path[0][len(current_path[0]) - 1]
+        # print "Current Coordinates: ", current_coordinates
 
-            if problem.isGoalState(current_state[0]):
-                return map(lambda state: state[1], current_path[0][1:])
+        """ Expand current_coordinates only if not in visited """
+        if not current_coordinates in visited:
+            visited.append(current_coordinates)
+            # print "Visited updated to: ", visited
 
-            non_visited_nodes = filter(lambda next_successor: not next_successor[0] in visited,
-                                        problem.getSuccessors(current_state[0]))
-            print "Non Visited nodes: ", non_visited_nodes
+            """ If the current_coordinates matches the goal state, then return directions """
+            if problem.isGoalState(current_coordinates):
+                # print "Path coordinates followed: ", visited
+                return map(lambda directions: directions[1], current_path[0][1:])
+
+            non_visited_nodes = filter(lambda successors: not successors[0] in visited, problem.getSuccessors(current_coordinates))
+            # print "Non Visited nodes: ", non_visited_nodes
 
             for successor in non_visited_nodes:
+                """ Calculate cost """
                 cost = current_path[1] + successor[2]
                 next_item = (list(current_path[0]), cost)
                 next_item[0].append(successor)
