@@ -2,3 +2,5 @@
 .vscode/*
 *.zip
 *.7z
+*_out.txt
+answer_verify.py
