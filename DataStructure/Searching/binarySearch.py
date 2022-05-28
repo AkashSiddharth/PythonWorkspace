@@ -1,6 +1,3 @@
-from operator import truediv
-
-
 def bin_search(slist, item):
   ''' Non recusive '''
   head = 0
@@ -11,7 +8,7 @@ def bin_search(slist, item):
     return False
   
   while head <= tail and not found:
-    print(head, tail, found)
+    # print(head, tail, found)
     mid = (head + tail) // 2
 
     if slist[mid] == item:
@@ -43,5 +40,5 @@ def bsearch(slist, item):
 if __name__ == "__main__":
   alist = [3, 5, 6, 8, 11, 12, 14, 15, 17, 18] 
   #location = bsearch(alist,50)
-  location = bin_search(alist, 8)
+  location = bin_search(alist, 18)
   print(location)

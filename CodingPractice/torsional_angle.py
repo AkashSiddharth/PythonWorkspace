@@ -3,7 +3,7 @@ Problem: You are given four points A, B, C and D in a 3-dimensional Cartesian co
     the plane made by the points A, B, C and B, C, D in degrees(not radians). Let the angle be PHI.
     cos(PHI) = (X.Y)/|X||Y| where
     X.Y (dot product)
-    X = AB x BC (Cross Product) abd AB = B - A
+    X = AB x BC (Cross Product) and AB = B - A
     Y = BC x CD
 
     Input Format: One line of input containing the space separated floating number values of the and coordinates of a point.
