@@ -16,8 +16,26 @@ Input Format: The first line contains a single integer, s, the number of
 Constraints:  1 <= s <= 5
               1 <= n <= 36
 '''
+
+## Recursion solution
+def r_stepPerms(n: int) -> int:
+  if n < 0: return 0
+  elif n == 1:  return 1
+  elif n in [1,2,3]:
+    return 1 + sum(r_stepPerms(n - s) for s in [1,2,3] if s < n)
+  else:
+    return sum(r_stepPerms(n - s) for s in [1,2,3] if s < n)
+
+## Dynamic Solution 
 def stepPerms(n: int) -> int:
+  cache = [0] * (n+1)
+  cache[0] = 1
+
+  for i in range(n+1):
+    cache[i] = sum(cache[i - s] for s in [1,2,3] if (i - s) > 0)
+    cache[i] += 1 if i in [1,2,3] else 0
   
+  return cache[-1]
 
 if __name__ == "__main__":
   # number of staircases
