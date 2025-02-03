@@ -1,3 +1,5 @@
+import os
+
 class Font:
     @staticmethod
     def set_style(f_style, fcolor, bcolor = "black"):
@@ -56,7 +58,7 @@ class Font:
 class Banners:
     @staticmethod
     def title_banner() -> None:
-        title = """
+        banner = """
             ___________.__         ___________               ___________            
             \__    ___/|__| ____   \__    ___/____    ____   \__    ___/___   ____  
               |    |   |  |/ ___\    |    |  \__  \ _/ ___\    |    | /  _ \_/ __ \ 
@@ -64,10 +66,34 @@ class Banners:
               |____|   |__|\___  >   |____|  (____  /\___  >   |____| \____/ \___  >
                                \/                 \/     \/                      \/ 
         """
-        print("\t\t{0}{1}{2}\n\n".format(Font.set_style("BLINK", "LIGHT_BLUE"), title, Font.end_style()))
+        print("\t\t{0}{1}{2}\n\n".format(Font.set_style("BLINK", "LIGHT_BLUE"), banner, Font.end_style()))
+
+    @staticmethod
+    def winner_banner() -> None:
+        banner = """
+            _________                                     __           ._._._.
+            \_   ___ \  ____   ____    ________________ _/  |_  ______ | | | |
+            /    \  \/ /  _ \ /    \  / ___\_  __ \__  \\   __\/  ___/ | | | |
+            \     \___(  <_> )   |  \/ /_/  >  | \// __ \|  |  \___ \   \|\|\|
+             \______  /\____/|___|  /\___  /|__|  (____  /__| /____  >  ______
+                    \/            \//_____/            \/          \/   \/\/\/
+        """
+        print("\t\t{0}{1}{2}\n\n".format(Font.set_style("BLINK", "LIGHT_GREEN"), banner, Font.end_style()))
+
+    @staticmethod
+    def game_draw_banner() -> None:
+        banner = """
+             ________                        ________                       
+            /  _____/_____    _____   ____   \______ \____________ __  _  __
+           /   \  ___\__  \  /     \_/ __ \   |    |  \_  __ \__  \\ \/ \/ /
+           \    \_\  \/ __ \|  Y Y  \  ___/   |    `   \  | \// __ \\     / 
+            \______  (____  /__|_|  /\___  > /_______  /__|  (____  /\/\_/  
+                    \/     \/      \/     \/          \/           \/            
+        """
+        print("\t\t{0}{1}{2}\n\n".format(Font.set_style("BLINK", "LIGHT_PURPLE"), banner, Font.end_style()))
+        
 
 class Utility:
-    import os
     @staticmethod
     def clear() -> None:
         if os.name == 'nt':

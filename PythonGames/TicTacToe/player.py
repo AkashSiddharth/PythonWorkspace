@@ -1,3 +1,5 @@
+import time
+
 class Player():
     def __init__(self, name, marker, first_move):
         # Private Properties
@@ -35,6 +37,24 @@ class Player():
 class HumanPlayer(Player):
     def __init__(self, name, marker, first_move):
         super().__init__(name, marker, first_move)
+    
+    def get_move(self, available_moves):
+        valid_move = False
+        while not valid_move:
+            player_move = input("Please make a play: ")
+
+            if player_move.isdigit():
+                # Check if the provided position is in available moves
+                if int(player_move) in available_moves:
+                    valid_move = True
+                else:
+                    print("That move is not available.")
+                    time.sleep(1)
+            else:
+                print("Not a valid move !!\nTry Again.")
+                time.sleep(1)
+        
+        return int(player_move)
 
 class EasyComputer(Player):
     def __init__(self, name, marker, first_move):
