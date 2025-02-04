@@ -5,3 +5,5 @@
 *_out.txt
 answer_verify.py
 input.txt
+*.pyc
+.DS_Store

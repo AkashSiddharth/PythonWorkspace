@@ -1,0 +1,8 @@
+{
+    "land-animal": ["cat", "dog", "tiger", "lion", "elephant", "hyena", "wolf", "giraffe"],
+    "fruit": ["pear", "apple", "mango", "watermelon", "peach"],
+    "city": ["delhi", "mumbai", "chennai", "shimla", "pune", "agra"],
+    "bird": ["crow", "parrot", "penguin", "emu", "ostrich", "kiwi"],
+    "aquatic-animal": ["salmon", "octopus", "sea-horse", "blue whale", "tiger shark"],
+    "vegetable": ["okra", "eggplant", "potato", "cabbage", "spinach", "broccoli"]
+}
