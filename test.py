@@ -168,14 +168,96 @@
 # row = 7
 # col = 8
 # text = 'ifmanwasmeanttostayonthegroundgodwouldhavegivenusroots'
-import itertools
-row = 3
-col = 3
-text = 'chillout'
-textf = [[text[(i*col) + j] for j in range(col) if (i* col + j) < len(text)] for i in range(row)]
-print(*textf)
+# import itertools
+# row = 3
+# col = 3
+# text = 'chillout'
+# textf = [[text[(i*col) + j] for j in range(col) if (i* col + j) < len(text)] for i in range(row)]
+# print(*textf)
 
-t_textf = list(itertools.zip_longest(*textf, fillvalue= ''))
-print(t_textf)
-# print(zip(['c', 'h', 'i'], ['l', 'l', 'o'], ['u', 't']))
-# print(*zip(['c', 'h', 'i'], ['l', 'l', 'o'], ['u', 't']))
+# t_textf = list(itertools.zip_longest(*textf, fillvalue= ''))
+# print(t_textf)
+# # print(zip(['c', 'h', 'i'], ['l', 'l', 'o'], ['u', 't']))
+# # print(*zip(['c', 'h', 'i'], ['l', 'l', 'o'], ['u', 't']))
+##########################################################################
+# import pygame
+
+# pygame.init()
+
+# screen = pygame.display.set_mode((800, 600))
+# pygame.display.set_caption("Multiple Circles Example")
+
+# WHITE = (255, 255, 255)
+# BLUE = (0, 0, 255)
+# GREEN = (0, 255, 0)
+
+# running = True
+# while running:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
+
+#     screen.fill(WHITE)
+
+#     # Draw multiple circles
+#     pygame.draw.circle(screen, BLUE, (200, 300), 50)
+#     pygame.draw.circle(screen, GREEN, (600, 300), 75)
+
+#     pygame.display.flip()
+
+# pygame.quit()
+##########################################################################
+# from tkinter import * 
+# from tkinter import font 
+# #create root window 
+# root = Tk() 
+# #get all the supported font families 
+# list_fonts = list(font.families()) 
+# #display them 
+# print(list_fonts)
+##########################################################################
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the screen
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Pygame Frame in Screen")
+
+# Define colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+
+# Define frame properties
+frame_width = 600
+frame_height = 400
+frame_thickness = 5
+frame_color = black
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Fill the screen with white
+    screen.fill(white)
+
+    # Draw the frame
+    pygame.draw.rect(screen, frame_color, 
+                     ((screen_width - frame_width) // 2, 
+                      (screen_height - frame_height) // 2, 
+                      frame_width, frame_height), 
+                     frame_thickness)
+
+    # Update the display
+    pygame.display.flip()
+
+# Quit Pygame
+pygame.quit()
+sys.exit()
