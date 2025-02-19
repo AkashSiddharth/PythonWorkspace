@@ -9,18 +9,23 @@ class TicTacToe:
             "winner": None
         }
 
-        self.play_field = self.generate_play_field()
+        self._play_field = self.generate_play_field()
 
         self.PLAY_FIELD_MARKER = ('0,0', '0,1', '0,2', '1,0', '1,1', '1,2', '2,0', '2,1', '2,2')
 
     @property
     def game_state(self):
         return self._game_state
+
+    @property
+    def play_field(self):
+        return self._play_field
     
     @game_state.setter
-    def game_state(self, value: bool):
-        self._game_state['game_over'] = True
-        self._game_over = value
+    def game_state(self, values):
+        flag, marker = values
+        self._game_state['game_over'] = bool(flag)
+        self._game_state['winner'] = marker
 
     @staticmethod
     def generate_play_field():
@@ -56,18 +61,6 @@ class TicTacToe:
         
         return available_moves
 
-    def make_move(self, position: int, player) -> int:
-        # Convert the player index into 2-D board index
-        board_index = self.PLAY_FIELD_MARKER[position]
-        i,j = map(lambda x: int(x), board_index.split(','))
-
-        # Set the marker at the position
-        self.play_field[i][j] = player.marker
-
-        # Check the game state for a win/loss/draw
-        if self.winner(player.marker):
-            self.game_state = player
-
     def winner(self, marker: str) -> bool:
         left_diag = ''
         right_diag = ''
@@ -96,7 +89,27 @@ class TicTacToe:
         if (left_diag == marker * 3) or (right_diag == marker * 3):
             has_won = True
 
-        return has_won 
+        return has_won
+
+    def undo_move(self, position: int) -> None:
+        # Convert the player index into 2-D board index
+        board_index = self.PLAY_FIELD_MARKER[position]
+        i,j = map(lambda x: int(x), board_index.split(','))
+
+        # clear the position
+        self.play_field[i][j] = ' '
+
+    def make_move(self, position: int, marker: str) -> None:
+        # Convert the player index into 2-D board index
+        board_index = self.PLAY_FIELD_MARKER[position]
+        i,j = map(lambda x: int(x), board_index.split(','))
+
+        # Set the marker at the position
+        self.play_field[i][j] = marker
+
+        # Check the game state for a win/loss/draw
+        if self.winner(marker):
+            self.game_state = (True, marker)
 
 if __name__ == "__main__":
     tic_tac_toe = TicTacToe()

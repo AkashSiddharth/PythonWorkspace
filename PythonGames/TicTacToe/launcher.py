@@ -62,13 +62,13 @@ class Launcher:
         Banners.title_banner()
         game.draw_board()
         Banners.winner_banner()
-        print("{} won the game !!!".format(player.name()))
+        print("{} won the game !!!".format(player))
 
-    def display_draw(self) -> None:
+    def display_draw(self, game) -> None:
         Utility.clear()
         Banners.title_banner()
         game.draw_board()
-        Banners.draw_banner()
+        Banners.game_draw_banner()
 
     def redraw_play_field(self, game, player) -> None:
         Utility.clear()
@@ -92,36 +92,34 @@ class Launcher:
                 player2 = EasyComputer('Computer(Easy)', player2_marker, not(player1_first_move))
             case 3:
                 player1 = HumanPlayer('Player1', player1_marker, player1_first_move)
-                player2 = EasyComputer('Computer(Hard)', player2_marker, not(player1_first_move))
-
-        # print(player1.current_turn)
-        # print(player2.current_turn)
+                player2 = AIComputer('Computer(Hard)', player2_marker, not(player1_first_move))
 
         # Generate Game
         tic_tac_toe = TicTacToe()
-        
-        available_positions = tic_tac_toe.get_available_moves()
-        while len(available_positions) > 0:
+
+        while len(available_positions := tic_tac_toe.get_available_moves()) > 0:
             if player1.current_turn:
                 self.redraw_play_field(tic_tac_toe, player1)
-                print(player1)
+                # print(player1)
                 postion = player1.get_move(available_positions)
-                tic_tac_toe.make_move(postion, player1)
+                tic_tac_toe.make_move(postion, player1.marker)
             else:
                 self.redraw_play_field(tic_tac_toe, player2)
-                print(player2)
-                postion = player2.get_move(available_positions)
-                tic_tac_toe.make_move(postion, player1)
+                # print(player2)
+                postion = player2.get_move(tic_tac_toe) if game_choice == 3 else player2.get_move(available_positions)
+                tic_tac_toe.make_move(postion, player2.marker)
             
             game_state = tic_tac_toe.game_state
 
             if game_state['game_over']: # If game over then display winner
-                self.display_winner(tic_tac_toe, game_state['winner'])
+                winner = player1.name if game_state['winner'] == player1.marker else player2.name
+                self.display_winner(tic_tac_toe, winner)
                 break
             else: # If game not over, switch turns and continue
-                for obj in [player1, player2]: obj.switch_turn
+                for obj in [player1, player2]:
+                    obj.current_turn = not obj.current_turn      
         else: # If no available moves and no winners then its a draw
-            self.display_draw()
+            self.display_draw(tic_tac_toe)
 
 if __name__ == "__main__":
     play = Launcher()

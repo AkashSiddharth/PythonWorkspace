@@ -110,57 +110,154 @@
 # menu.get(ans,[None,invalid])[1]()
 ####################################################################################
 # Color Example
-class Font:
-   def set_style(f_style, fcolor, bcolor = "black"):
-      style = {
-         "NORMAL": "\033[0m",
-         "BOLD": "\033[1m",
-         "FAINT": "\033[2m",
-         "ITALIC": "\033[3m",
-         "UNDERLINE": "\033[4m",
-         "BLINK": "\033[5m",
-         "NEGATIVE": "\033[7m",
-         "STRIKE": "\033[9m"
-      }
+# class Font:
+#    def set_style(f_style, fcolor, bcolor = "black"):
+#       style = {
+#          "NORMAL": "\033[0m",
+#          "BOLD": "\033[1m",
+#          "FAINT": "\033[2m",
+#          "ITALIC": "\033[3m",
+#          "UNDERLINE": "\033[4m",
+#          "BLINK": "\033[5m",
+#          "NEGATIVE": "\033[7m",
+#          "STRIKE": "\033[9m"
+#       }
 
-      fgcolor = {
-         "BLACK": "\033[0;30m",
-         "RED": "\033[0;31m",
-         "GREEN": "\033[0;32m",
-         "BROWN": "\033[0;33m",
-         "BLUE": "\033[0;34m",
-         "PURPLE": "\033[0;35m",
-         "CYAN": "\033[0;36m",
-         "LIGHT_GRAY": "\033[0;37m",
-         "DARK_GRAY": "\033[1;30m",
-         "LIGHT_RED": "\033[1;31m",
-         "LIGHT_GREEN": "\033[1;32m",
-         "YELLOW": "\033[1;33m",
-         "LIGHT_BLUE": "\033[1;34m",
-         "LIGHT_PURPLE": "\033[1;35m",
-         "LIGHT_CYAN": "\033[1;36m",
-         "LIGHT_WHITE": "\033[1;37m"
-      }
+#       fgcolor = {
+#          "BLACK": "\033[0;30m",
+#          "RED": "\033[0;31m",
+#          "GREEN": "\033[0;32m",
+#          "BROWN": "\033[0;33m",
+#          "BLUE": "\033[0;34m",
+#          "PURPLE": "\033[0;35m",
+#          "CYAN": "\033[0;36m",
+#          "LIGHT_GRAY": "\033[0;37m",
+#          "DARK_GRAY": "\033[1;30m",
+#          "LIGHT_RED": "\033[1;31m",
+#          "LIGHT_GREEN": "\033[1;32m",
+#          "YELLOW": "\033[1;33m",
+#          "LIGHT_BLUE": "\033[1;34m",
+#          "LIGHT_PURPLE": "\033[1;35m",
+#          "LIGHT_CYAN": "\033[1;36m",
+#          "LIGHT_WHITE": "\033[1;37m"
+#       }
 
-      bgcolor = {
-         "BLACK": "\033[40m",
-         "RED": "\033[41m",
-         "GREEN": "\033[42m",
-         "BROWN": "\033[43m",
-         "BLUE": "\033[44m",
-         "MAGENTA": "\033[45m",
-         "CYAN": "\033[46m",
-         "GRAY": "\033[47m"
-      }
+#       bgcolor = {
+#          "BLACK": "\033[40m",
+#          "RED": "\033[41m",
+#          "GREEN": "\033[42m",
+#          "BROWN": "\033[43m",
+#          "BLUE": "\033[44m",
+#          "MAGENTA": "\033[45m",
+#          "CYAN": "\033[46m",
+#          "GRAY": "\033[47m"
+#       }
 
-      code = "{0}{1}{2}".format(style[f_style.upper()], 
-                                 fgcolor[fcolor.upper()], 
-                                 bgcolor[bcolor.upper()])
+#       code = "{0}{1}{2}".format(style[f_style.upper()], 
+#                                  fgcolor[fcolor.upper()], 
+#                                  bgcolor[bcolor.upper()])
 
-      return code
+#       return code
     
-   def end_style():
-      END_FONT_STYLE = "\033[0m"
-      return END_FONT_STYLE
+#    def end_style():
+#       END_FONT_STYLE = "\033[0m"
+#       return END_FONT_STYLE
 
-print(Font.set_style("blink",'red') + "TESTING" + Font.end_style())
+# print(Font.set_style("blink",'red') + "TESTING" + Font.end_style())
+######################################################################
+# row = 7
+# col = 8
+# text = 'ifmanwasmeanttostayonthegroundgodwouldhavegivenusroots'
+# import itertools
+# row = 3
+# col = 3
+# text = 'chillout'
+# textf = [[text[(i*col) + j] for j in range(col) if (i* col + j) < len(text)] for i in range(row)]
+# print(*textf)
+
+# t_textf = list(itertools.zip_longest(*textf, fillvalue= ''))
+# print(t_textf)
+# # print(zip(['c', 'h', 'i'], ['l', 'l', 'o'], ['u', 't']))
+# # print(*zip(['c', 'h', 'i'], ['l', 'l', 'o'], ['u', 't']))
+##########################################################################
+# import pygame
+
+# pygame.init()
+
+# screen = pygame.display.set_mode((800, 600))
+# pygame.display.set_caption("Multiple Circles Example")
+
+# WHITE = (255, 255, 255)
+# BLUE = (0, 0, 255)
+# GREEN = (0, 255, 0)
+
+# running = True
+# while running:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             running = False
+
+#     screen.fill(WHITE)
+
+#     # Draw multiple circles
+#     pygame.draw.circle(screen, BLUE, (200, 300), 50)
+#     pygame.draw.circle(screen, GREEN, (600, 300), 75)
+
+#     pygame.display.flip()
+
+# pygame.quit()
+##########################################################################
+# from tkinter import * 
+# from tkinter import font 
+# #create root window 
+# root = Tk() 
+# #get all the supported font families 
+# list_fonts = list(font.families()) 
+# #display them 
+# print(list_fonts)
+##########################################################################
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the screen
+screen_width = 800
+screen_height = 600
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Pygame Frame in Screen")
+
+# Define colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+
+# Define frame properties
+frame_width = 600
+frame_height = 400
+frame_thickness = 5
+frame_color = black
+
+# Main loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Fill the screen with white
+    screen.fill(white)
+
+    # Draw the frame
+    pygame.draw.rect(screen, frame_color, 
+                     ((screen_width - frame_width) // 2, 
+                      (screen_height - frame_height) // 2, 
+                      frame_width, frame_height), 
+                     frame_thickness)
+
+    # Update the display
+    pygame.display.flip()
+
+# Quit Pygame
+pygame.quit()
+sys.exit()
