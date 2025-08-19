@@ -20,6 +20,9 @@ button2 = Button(rightframe, text = "Button2")
 button2.pack(padx = 3, pady = 3)
 button3 = Button(leftframe, text = "Button3")
 button3.pack(padx = 3, pady = 3)
+
+button1_txt = button1.cget("text")
+print(button1_txt)
  
 root.title("Test")
 root.mainloop()
