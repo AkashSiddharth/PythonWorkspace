@@ -49,6 +49,6 @@ def draw_table(in_data):
 
 
 if __name__ == "__main__":
-  deploy_data = get_kuberentes_data('aml-shuri-aws-dev')
+  deploy_data = get_kuberentes_data('test')
   print(deploy_data)
   draw_table(deploy_data)

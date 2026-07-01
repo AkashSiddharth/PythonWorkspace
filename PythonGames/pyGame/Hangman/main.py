@@ -4,9 +4,11 @@ import os
 import math
 import json
 import random
+import logging
 
 class Hangman:
   def __init__(self):
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(message)s")
     self.run = True
     self.hangman_status = 0
 
@@ -31,9 +33,10 @@ class Hangman:
     self.B_RADIUS = (self.width - self.PADDING * 16) // 26
 
     # Load assets
-    self.images = list(pygame.image.load(os.path.join(self.asset_path,entry.name))
-                          for entry in os.scandir(self.asset_path) 
-                            if entry.is_file)
+    self.images = list(pygame.image.load(os.path.join(self.asset_path, _image))
+                        for _image in sorted(list(entry.name
+                                                  for entry in os.scandir(self.asset_path)
+                                                    if entry.is_file)))
 
     # Establish Button Coordinates
     self.buttons = self.get_button_coord()
@@ -53,6 +56,8 @@ class Hangman:
                                               int(self.config['FONTS']['BUTTON_FONT_SIZE']), bold=True)
     self.word_font = pygame.font.SysFont(self.config['FONTS']['FONT'], 
                                               int(self.config['FONTS']['WORD_FONT_SIZE']), bold=True, italic = True)
+    self.category_font = pygame.font.SysFont(self.config['FONTS']['FONT'], 
+                                              int(self.config['FONTS']['CATEGORY_FONT_SIZE']), bold=False, italic = True)
     self.title_font = pygame.font.SysFont(self.config['FONTS']['TITLE_FONT'], 
                                               int(self.config['FONTS']['TITLE_FONT_SIZE']))
 
@@ -84,14 +89,14 @@ class Hangman:
       category = list(data)[random.randint(0, len(data.keys()) - 1)]
       word = data[category][random.randint(0, len(data[category]) - 1)]
 
-      # print(category, word)
+      logging.debug(f"{category}, {word}")
     return (category.upper(), word.upper())
 
   # DRAW
   def draw_word(self, color: tuple):
     display_word = ""
-    # print(self.WORD)
-    # print(self.guessed)
+    logging.debug(f"{self.WORD}")
+    logging.debug(f"{self.guessed}")
     for character in self.WORD:
       if character in self.guessed:
         display_word += character + " "
@@ -101,6 +106,12 @@ class Hangman:
     text = self.word_font.render(display_word, 1, color)
     x_pos = self.width / 2 - text.get_width() / 2
     y_pos = self.height / 2
+    self.win.blit(text, (x_pos, y_pos))
+  
+  def draw_category(self, color: tuple):
+    text = self.category_font.render(f"Category: {self.CATEGORY}", 1, color)
+    x_pos = (self.width / 2 - text.get_width() / 2)
+    y_pos = self.height / 2 + 100
     self.win.blit(text, (x_pos, y_pos))
   
   def draw_button(self, pos: tuple, letter: str, b_color: tuple, f_color: tuple, hover = False):
@@ -131,6 +142,9 @@ class Hangman:
 
     # Draw Word Section
     self.draw_word(self.get_color('black'))
+
+    # To-DO : Display Category
+    self.draw_category(self.get_color('black'))
 
     # Draw Buttons
     for button in self.buttons:
@@ -166,14 +180,14 @@ class Hangman:
         # Calculate distance between 2 coordinates
         distance = math.sqrt((x - m_x) ** 2 + (y - m_y) ** 2)
         if distance < self.B_RADIUS:
-          # print("on Letter: " + letter)
+          logging.debug(f"On Letter: {letter}")
           self.draw_button((x, y), letter, self.get_color('black'), self.get_color('white'), True)
           update_rect = pygame.Rect(x - self.B_RADIUS, y - self.B_RADIUS, self.B_RADIUS * 2, self.B_RADIUS *2)
           pygame.display.update(update_rect)
 
   def event_mouse_l_click(self):
     m_x, m_y = pygame.mouse.get_pos()
-    print(m_x, m_y)
+    logging.debug(f"X Pos: {m_x}, Y Pos: {m_y}")
 
     for index, button in enumerate(self.buttons):
       x, y, letter, enabled = button
@@ -182,15 +196,18 @@ class Hangman:
         # Calculate distance between 2 coordinates
         distance = math.sqrt((x - m_x) ** 2 + (y - m_y) ** 2)
         if distance < self.B_RADIUS:
-          print("Letter " + letter + " selected and to be disabled.")
+          logging.info("Letter " + letter + " selected and to be disabled.")
           self.buttons[index][-1] = False
           self.guessed.append(letter)
 
           if letter not in self.WORD:
+            logging.info(f"Not correct, hangman status: {self.hangman_status}")
             self.hangman_status += 1
 
   def launch(self): 
     clock = pygame.time.Clock()
+
+    logging.debug(f"{self.images}")
 
     # Setup game loop
     while self.run:
@@ -205,7 +222,7 @@ class Hangman:
 
         if event.type == pygame.MOUSEBUTTONDOWN:
           self.event_mouse_l_click()
-          # print(self.hangman_status)
+          logging.debug(f"{self.hangman_status}")
 
       self.draw()
 
